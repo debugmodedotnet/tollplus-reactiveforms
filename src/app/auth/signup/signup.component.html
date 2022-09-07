@@ -1,0 +1,85 @@
+
+<div class="row">
+    <div class="col-md-3">
+        <button class="btn btn-info" (click)="setDefault()">
+            Set Default Login</button>
+    </div>
+    <div class="col-md-6">
+     <form class="form" (ngSubmit)="login()" 
+     [formGroup]="signUp" novalidate>
+        <input type="text" class="form-control" 
+        formControlName="email" placeholder="Enter Email" />
+        <div class="alert alert-danger" 
+        *ngIf="signUp.get('email')?.hasError('required') 
+        && signUp.get('email')?.touched">
+           Email is required
+        </div>
+        <br/>
+        <input type="password" class="form-control"
+         formControlName="password" 
+         placeholder="Enter Password" />
+        <div class="alert alert-danger" 
+        *ngIf="!signUp.get('password')?.valid 
+        && signUp.get('password')?.touched">
+           Password is required and should be atleast 4 character
+        </div>
+        <br/>
+        <input type="text" class="form-control"
+        formControlName="age" 
+        placeholder="Enter Age" />
+       <div class="alert alert-danger" 
+       *ngIf="!signUp.get('age')?.valid 
+       && signUp.get('age')?.touched">
+          Age should be in between {{minAge}} and {{maxAge}}
+       </div>
+       <br/>
+       <input type="text" class="form-control"
+       formControlName="phone" 
+       placeholder="Enter Phone" />
+
+       <div class="alert alert-danger" 
+       *ngIf="!signUp.get('phone')?.valid 
+       && signUp.get('phone')?.touched">
+          Phone is required to send notification
+       </div>
+       <br/>
+       <label class='control-label form-control'>Send Notification</label>
+       <br />
+       <label class="radio-inline">
+           <input type="radio" value="email" formControlName="notification">Email
+       </label>
+       <label class="radio-inline">
+           <input type="radio" value="phone" formControlName="notification">Phone
+       </label>
+
+
+  <br/>
+
+  <div  formArrayName="nominees" *ngFor="let n of nominees.controls; let i = index">
+ <div class="row" [formGroupName]="i">
+ 
+   <div class="col-md-6">
+   <input formControlName='name' id="{{'name'+i}}" 
+   type="text" class="form-control mb-4" placeholder="Enter Name" />
+  
+  </div>
+  <div class="col-md-6">
+   <input formControlName='relationship'
+    id="{{'relationship' + i}}" type="text" class="form-control mb-4"
+   placeholder="Enter relationship " />
+</div>
+</div>
+
+ </div>
+
+  <br/>
+        <button [disabled]="signUp.invalid" 
+        class="btn btn-defaul">Login</button> 
+        <button (click)="cancel()" 
+        class="btn btn-danger">Cancel</button>
+     </form>
+    </div>
+    <div class="col-md-3">
+        <button (click)="addN()">Add Nominees</button>
+    </div>
+</div>
